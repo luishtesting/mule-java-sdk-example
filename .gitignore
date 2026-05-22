@@ -1,0 +1,61 @@
+# =========================
+# Java / Maven
+# =========================
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+logs/
+*.log
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+out/
+
+# =========================
+# Eclipse / Anypoint Studio
+# =========================
+.metadata/
+.classpath
+.project
+.settings/
+bin/
+
+# Anypoint Studio
+.mule/
+.recommenders/
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+*.properties.local
+secure-properties.yaml
+
+# =========================
+# Temporary files
+# =========================
+tmp/
+temp/
+*.tmp
