@@ -9,13 +9,7 @@ import org.mule.runtime.extension.api.annotation.param.Parameter;
  * operations since they represent something core from the extension.
  */
 @Operations(BasicOperations.class)
-@ConnectionProviders(BasicConnectionProvider.class)
+@ConnectionProviders(StringConnectionProvider.class)
 public class BasicConfiguration {
 
-  @Parameter
-  private String configId;
-
-  public String getConfigId(){
-    return configId;
-  }
 }

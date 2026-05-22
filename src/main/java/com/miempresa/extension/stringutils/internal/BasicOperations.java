@@ -8,14 +8,17 @@ import org.mule.runtime.extension.api.annotation.param.display.Placement;
 import org.mule.runtime.extension.api.annotation.param.display.Password;
 import org.mule.runtime.extension.api.annotation.error.Throws; // 🛠️ Nueva importación
 import org.mule.runtime.extension.api.exception.ModuleException; // 🛠️ Nueva importación
+import org.mule.runtime.extension.api.annotation.param.Connection; // 🛠️ Nueva Importación
 
 public class BasicOperations {
 
     @MediaType(value = MediaType.ANY, strict = false)
     @DisplayName("Reverse String")
-    @Summary("Voltea una cadena de texto y opcionalmente la convierte a mayúsculas.")
-    @Throws(StringUtilsErrorProvider.class) // 🛠️ Le avisamos a Mule qué catálogo de errores usamos
+    @Throws(StringUtilsErrorProvider.class)
     public String reverseString(
+            
+            // 🛠️ MULE INYECTA ESTO AUTOMÁTICAMENTE DESDE EL POOL GLOBAL
+            @Connection StringConnection conexion, 
             
             @DisplayName("Texto a Voltear")
             String texto,
@@ -32,13 +35,12 @@ public class BasicOperations {
             String claveSecreta
     ) {
         
-        // 🛠️ VALIDACIÓN: Si el texto viene nulo o vacío, disparamos el error custom
         if (texto == null || texto.trim().isEmpty()) {
-            throw new ModuleException(
-                StringUtilsError.TEXT_EMPTY, 
-                new IllegalArgumentException("El parámetro 'Texto a Voltear' no puede estar vacío.")
-            );
+            throw new ModuleException(StringUtilsError.TEXT_EMPTY, new IllegalArgumentException("Texto vacío."));
         }
+
+        // 🛠️ Usamos datos de la conexión activa dentro de nuestra lógica de negocio
+        System.out.println("Operación ejecutada bajo la Conexión ID: " + conexion.getId());
 
         String resultado = new StringBuilder(texto).reverse().toString();
 
@@ -46,6 +48,7 @@ public class BasicOperations {
             resultado = resultado.toUpperCase();
         }
 
+        // Simulamos que añadimos la API Key de la conexión como parte del rastro
         if (claveSecreta != null && !claveSecreta.trim().isEmpty()) {
             resultado = "[" + claveSecreta + "] " + resultado;
         }
